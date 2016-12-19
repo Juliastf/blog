@@ -97,7 +97,9 @@ public class ArticleController {
                     ("C:\\Users\\nikijul\\Desktop\\Project\\blog\\src\\main\\resources\\static\\images\\", originalFilename);
             try {
                 file.transferTo(imageFile);
-                articleEntity.setImagePath(imageFile.getPath());
+                Integer index = imageFile.getPath().lastIndexOf("\\");
+                String dbpath=imageFile.getPath().substring(index + 1);
+                articleEntity.setImagePath(dbpath);
                 this.articleRepository.saveAndFlush(articleEntity);
             } catch(IOException e) {
                 e.printStackTrace();
@@ -161,7 +163,7 @@ public class ArticleController {
 
     @PostMapping("/article/edit/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String editProcess(@PathVariable Integer id, ArticleBindingModel articleBindingModel) {
+    public String editProcess(@PathVariable Integer id, ArticleBindingModel articleBindingModel, FileBindingModel fileBindingModel ) {
         if (!this.articleRepository.exists(id)) {
             return "redirect:/";
         }
@@ -178,7 +180,25 @@ public class ArticleController {
         article.setContent(articleBindingModel.getContent());
         article.setTitle(articleBindingModel.getTitle());
         article.setTags(tags);
-        this.articleRepository.saveAndFlush(article);
+
+
+        MultipartFile fileEdit=fileBindingModel.getPicture();
+        if (fileEdit!=null) {
+            String originalFilename=fileEdit.getOriginalFilename();
+
+            File editImageFile=new File
+                    ("C:\\Users\\nikijul\\Desktop\\Project\\blog\\src\\main\\resources\\static\\images\\", originalFilename);
+            try {
+                fileEdit.transferTo(editImageFile);
+                Integer indexEdit = editImageFile.getPath().lastIndexOf("\\");
+                String dbpathEdit=editImageFile.getPath().substring(indexEdit + 1);
+                article.setImagePath(dbpathEdit);
+                this.articleRepository.saveAndFlush(article);
+            } catch(IOException e) {
+                e.printStackTrace();
+
+            }
+        }
 
         return "redirect:/article/" + article.getId();
     }

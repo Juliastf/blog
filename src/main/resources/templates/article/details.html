@@ -7,7 +7,7 @@
                         <h2 th:text="${article.title}"></h2>
                     </header>
 
-                    <img th:src="@{http://127.0.0.1:8080/images/{imagePath}(imagePath=${article.imagePath})}"/>
+                    <img th:if="${article.imagePath}" th:src="@{http://127.0.0.1:8080/images/{imagePath}(imagePath=${article.imagePath})}" height="640" width="640"/>
 
                     <p th:text="${article.content}"> </p>
 
