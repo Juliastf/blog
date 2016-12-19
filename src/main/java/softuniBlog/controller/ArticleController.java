@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuniBlog.bindingModel.ArticleBindingModel;
 import softuniBlog.bindingModel.FileBindingModel;
-import softuniBlog.entity.Article;
-import softuniBlog.entity.Category;
-import softuniBlog.entity.Tag;
-import softuniBlog.entity.User;
+import softuniBlog.entity.*;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.CategoryRepository;
 import softuniBlog.repository.TagRepository;
@@ -128,9 +125,13 @@ public class ArticleController {
 
         }
         Article article=this.articleRepository.findOne(id);
+        List<Comment> comments = article.getComments().stream()
+                .sorted((a, b) -> b.getDate().compareTo(a.getDate()))
+                .collect(Collectors.toList());
 
         model.addAttribute("article", article);
         model.addAttribute("view", "article/details");
+        model.addAttribute("comments", comments);
 
         return "base-layout";
     }

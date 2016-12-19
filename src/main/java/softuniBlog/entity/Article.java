@@ -20,6 +20,9 @@ public class Article {
 
     private String imagePath;
 
+    private Set<Comment> comments;
+
+
 
 
 
@@ -68,6 +71,7 @@ public class Article {
         this.category=category;
 
         this.tags=tags;
+        this.comments=new HashSet<>();
 
 
     }
@@ -112,8 +116,12 @@ public class Article {
         this.imagePath = imagePath;
     }
 
+    @OneToMany(mappedBy = "articleId")
+    public Set<Comment> getComments() {
+        return comments;
+    }
 
-
-
-
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 }

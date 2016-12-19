@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class ArticleBindingModel {
 
     @NotNull
-    private  String title;
+    private String title;
 
     @NotNull
     private String content;
@@ -39,6 +39,8 @@ public class ArticleBindingModel {
         this.categoryId = categoryId;
     }
 
+    private String tagString;
+
     public String getTagString() {
         return tagString;
     }
@@ -47,6 +49,6 @@ public class ArticleBindingModel {
         this.tagString = tagString;
     }
 
-    private String tagString;
+
 
 }
