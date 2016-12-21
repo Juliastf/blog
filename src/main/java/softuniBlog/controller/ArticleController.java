@@ -18,10 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuniBlog.bindingModel.ArticleBindingModel;
 import softuniBlog.bindingModel.FileBindingModel;
 import softuniBlog.entity.*;
-import softuniBlog.repository.ArticleRepository;
-import softuniBlog.repository.CategoryRepository;
-import softuniBlog.repository.TagRepository;
-import softuniBlog.repository.UserRepository;
+import softuniBlog.repository.*;
 
 
 import java.io.File;
@@ -45,6 +42,9 @@ public class ArticleController {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping("/article/create")
     @PreAuthorize("isAuthenticated()")
@@ -232,6 +232,9 @@ public class ArticleController {
 
         if (!isUserAuthorOrAdmin(article)) {
             return "redirect:/article/"+id;
+        }
+        for (Comment comment:article.getComments()) {
+            this.commentRepository.delete(comment);
         }
 
         this.articleRepository.delete(article);

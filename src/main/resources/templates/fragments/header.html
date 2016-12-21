@@ -1,10 +1,10 @@
 <header  th:fragment="header">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <center><img class="img-rounded" th:src="@{/images/onlinelogomaker-121216-2357-2873.png}"  /></center>
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
-                <img th:if="${article.imagePath}" th:src="@{http://127.0.0.1:8080/images/onlinelogomaker-121216-2357-2873.png}" />
-                <a th:href="@{/}" class="navbar-brand">BAKING AFTER DARK</a>
+                       <div class="navbar-header" >
 
+                <a th:href="@{/}" class="navbar-brand">BAKING AFTER DARK</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
